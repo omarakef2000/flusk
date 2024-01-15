@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Image</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            background-image: url('/static/1.jpg'); /* Use the relative URL to the image */
+            background-size: cover;
+            text-align: center;
+            margin: 0; /* Remove default body margin */
+        }
+        #displayed-image {
+            max-width: 300px; /* Adjust the maximum width as needed */
+            max-height: 300px; /* Adjust the maximum height as needed */
+        }
+        h2 {
+            color: #333;
+        }
+
+        a {
+            display: inline-block;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            margin: 10px;
+            text-decoration: none;
+            border-radius: 3px;
+        }
+
+        a:hover {
+            background-color: #0056b3;
+        }
+
+        #upload-form {
+            margin-top: 20px;
+        }
+
+        #folder {
+            margin: 10px;
+        }
+
+        .logo-container {
+            position: absolute;
+            top: 10px; /* Adjust the top distance as needed */
+            right: 10px; /* Adjust the right distance as needed */
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            width: 50px; /* Adjust the width as needed to make it small */
+            margin-right: 10px; /* Adjust the margin between the logo and text */
+        }
+
+        .logo-text {
+            font-weight: bold;
+            font-size: 16px; /* Adjust the font size as needed */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="logo-container">
+        <img class="logo" src='/static/2.jpg' alt="xray">
+        <p class="logo-text">Dental X-ray</p>
+    </div>
+
+    <div id="upload-form">
+        <h2>Upload an image </h2>
+        <form method="POST" action="{{ url_for('upload_image') }}" enctype="multipart/form-data" id="image-upload-form">
+            <input type="file" name="image" accept=".png" id="image-upload-input">
+            
+            <!-- Input field for the user to specify the folder -->
+            <label for="folder">Folder:</label>
+            <input type="text" name="folder" id="folder" placeholder="Folder name or path">
+            
+            <input type="submit" value="Detect">
+            <a href="{{url_for('logout')}}">Press here to logout</a>
+        </form>
+    </div>
+
+    <div id="uploaded-image">
+        <h3>Uploaded Image:</h3>
+        <img id="displayed-image" src="" alt="Uploaded Image">
+    </div>
+
+    <script>
+        document.getElementById('image-upload-input').addEventListener('change', function (e) {
+            const displayedImage = document.getElementById('displayed-image');
+            const file = e.target.files[0];
+            const objectURL = URL.createObjectURL(file);
+            displayedImage.src = objectURL;
+        });
+    </script>
+</body>
+
+</html>
